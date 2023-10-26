@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Http\Resources\Post;
 use App\Models\Category;
+use App\Models\Comunity;
 use App\Models\Tag;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Database\Seeder;
@@ -25,8 +26,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserSeeder::class);
         Category::factory(4)->create();
-        Tag::factory(8)->create();
         $this->call(PostSeeder::class);
+        $this->call(ComunitySeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

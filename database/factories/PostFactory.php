@@ -29,6 +29,9 @@ class PostFactory extends Factory
             'status'=>$this->faker->randomElement([1,2]),
             'category_id'=> Category::all()->random()->id,
             'user_id'=> User::all()->random()->id,
+            'visitas'=>$this->faker->randomNumber(),
+            'calificacion'=>$this->faker->randomFloat(2,1,5),
+            'tipo'=>$this->faker->randomElement(['video','articulo']),
             //
         ];
     }

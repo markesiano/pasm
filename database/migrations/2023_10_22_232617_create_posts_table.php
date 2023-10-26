@@ -33,6 +33,9 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
+            $table->integer('visitas');
+            $table->float('calificacion');
+            $table->enum('tipo', ['video', 'articulo']);
             $table->timestamps();
         });
     }
