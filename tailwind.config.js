@@ -21,7 +21,4 @@ export default {
 
     plugins: [forms, typography],
 
-    corePlugins: {
-        container: false,
-    }
 };
