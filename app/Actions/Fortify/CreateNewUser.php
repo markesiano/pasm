@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
-
+use Illuminate\Validation\Rule;
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
@@ -19,18 +19,29 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
-        Validator::make($input, [
+        $validator = Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
-        ])->validate();
+            'rol' => ['required', Rule::in(['Estudiante', 'Psicólogo'])],
 
+        ]);
+
+        if ($input['rol'] === 'Psicólogo') {
+            $validator->sometimes('file-upload', 'required|file|mimes:pdf,png,jpg|max:5120', function ($input) {
+                return true;
+            });
+        }
+
+        $validator->validate();
 
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
+            'rol' => $input['rol'],
             'password' => Hash::make($input['password']),
+            'certificado_file' => $input['file-upload'] ?? '',
         ]);
     }
 }

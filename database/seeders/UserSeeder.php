@@ -12,9 +12,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        //Este es un objeto pre creado para que se pueda acceder sin que sea aleatorio
         User::create([
             'name' => 'Jesus Jimenez',
             'email' => 'markesiano@live.com.mx',
+            'rol' => 'Estudiante',                           //Se agrega el campo "rol" con valor "Psicólogo"
             'password' => bcrypt('12345678')
         ]);
         User::factory(99)->create();
