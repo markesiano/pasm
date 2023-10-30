@@ -213,5 +213,6 @@ return [
         'updated_at'               => 'actualizado el',
         'username'                 => 'usuario',
         'year'                     => 'año',
+        'file-upload'              => 'certificado',
     ],
 ];

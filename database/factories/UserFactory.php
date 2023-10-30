@@ -28,7 +28,10 @@ class UserFactory extends Factory
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
+            'rol'=>$this->faker->randomElement(['Estudiante','Psicólogo']),         //Se agrega el campo "rol" con valores aleatorios
+            'status'=>$this->faker->randomElement([1,2]),                           //Se agrega el campo "status" con valores aleatorios
             'profile_photo_path' => null,
+            'certificado_file' => null,                                             //Se agrega el campo "certificado_file" con valor null
             'current_team_id' => null,
         ];
     }
