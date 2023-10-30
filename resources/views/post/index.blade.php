@@ -51,11 +51,6 @@
                             Calificacion: {{$post->calificacion}} ☆
                         </a>
                      </div>
-                     <div class="py-3">
-                        <a href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
-                            Status: {{$post->status}} !!
-                        </a>
-                     </div>
                 </div>
 
             </article>
