@@ -26,6 +26,13 @@ class Post extends Model
     public function image(){
         return $this->morphOne(Image::class, 'imageable');
     }
+
     
+
+    // RELACION MUCHOS A MUCHOS USER-FAVORITO
+    public function userFavorite()
+    {
+        return $this->belongsToMany(User::class);
+    }
 
 }

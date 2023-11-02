@@ -6,9 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Laravel\Fortify\TwoFactorAuthenticatable;
+use App\Models\Post;
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -57,4 +58,26 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+
+    // RELACION MUCHOS A MUCHOS POST-FAVORITO
+
+    public function postFavorite()
+    {
+        return $this->belongsToMany('App\Models\Post');
+    }
+
+    public function markAsFavorite(Post $post)
+    {
+        $this->postFavorite()->attach($post);
+    }
+
+    public function removeFromFavorites(Post $post)
+    {
+        $this->postFavorite()->detach($post);
+    }
+
+    
+
 }
