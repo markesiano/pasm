@@ -68,11 +68,15 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Post');
     }
 
+
+    // MARCAR COMO FAVORITA
     public function markAsFavorite(Post $post)
     {
         $this->postFavorite()->attach($post);
     }
+    
 
+    // REMOVER DE FAVORITOS
     public function removeFromFavorites(Post $post)
     {
         $this->postFavorite()->detach($post);
