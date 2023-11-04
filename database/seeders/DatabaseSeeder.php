@@ -8,6 +8,7 @@ use App\Http\Resources\Post;
 use App\Models\Category;
 use App\Models\Comunity;
 use App\Models\Tag;
+use App\Models\Thought;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Database\Seeder;
 
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(4)->create();
         $this->call(PostSeeder::class);
         $this->call(ComunitySeeder::class);
+        $this->call(ThoughtSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

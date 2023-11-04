@@ -31,8 +31,8 @@ class PostFactory extends Factory
             'user_id'=> User::all()->random()->id,
             'visitas'=>$this->faker->randomNumber(),
             'calificacion'=>$this->faker->randomFloat(2,1,5),
-            'tipo'=>$this->faker->randomElement(['video','articulo']),
-            //
+            'postable_type'=>$this->faker->randomElement(['Video','Articulo']),
+            
         ];
     }
 }

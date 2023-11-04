@@ -27,6 +27,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol',                                  //Se agregó el campo "rol"
+        'certificado_file',                     //Se agregó el campo "certificado_file"
     ];
 
     /**

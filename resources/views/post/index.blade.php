@@ -34,7 +34,7 @@
 
         <div class="grid grid-cols-3 py-3 gap-6 rounded">
             @foreach ($posts as $post)
-                @if ($post->tipo == 'articulo')
+                @if ($post->postable_type == 'Articulo')
                     <article
                         class=" rounded-2xl w-full h-80 bg-cover bg-center @if ($loop->first) col-span-2 @endif"
                         {{-- style="background-image: url({{ url('storage/' . $post->image->url) }})"  --}}>
@@ -49,6 +49,7 @@
                             <h1 class="text-4xl text-white leading-8 font-bold">
                                 <a href="">
 
+<<<<<<< HEAD
                                     {{ $post->name }}
                                 </a>
                             </h1>
@@ -67,6 +68,22 @@
                                     Status: {{ $post->status }} !!
                                 </a>
                             </div>
+=======
+                            {{$post->name}}
+                        </a>
+                     </h1>
+                     <div class="py-3">
+                        <a href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                            Visto: {{$post->visitas}} veces
+                        </a>
+                     </div>
+                     <div class="py-3">
+                        <a href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                            Calificacion: {{$post->calificacion}} ☆
+                        </a>
+                     </div>
+                </div>
+>>>>>>> origin/loginCertificado
 
                             <div class="py-3">
 
@@ -110,7 +127,7 @@
 
         <div class="grid grid-cols-3 py-3 gap-6">
             @foreach ($posts as $post)
-                @if ($post->tipo == 'video')
+                @if ($post->postable_type == 'Video')
                     <article
                         class=" rounded-2xl w-full h-80 bg-cover bg-center @if ($loop->first) col-span-2 @endif"
                         {{-- style="background-image: url({{ url('storage/' . $post->image->url) }})"  --}}>
