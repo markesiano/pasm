@@ -19,7 +19,8 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->sentence();
+        $name = $this->faker->unique()->words(6, true);
+
         return [
 
             'name'=>$name,
@@ -32,7 +33,7 @@ class PostFactory extends Factory
             'visitas'=>$this->faker->randomNumber(),
             'calificacion'=>$this->faker->randomFloat(2,1,5),
             'postable_type'=>$this->faker->randomElement(['Video','Articulo']),
-            
+
         ];
     }
 }

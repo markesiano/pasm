@@ -58,31 +58,46 @@
                                 style="background-image: url(@if ($post->image) {{ Storage::url($post->image->url) }} @else https://cdn.pixabay.com/photo/2017/01/30/02/20/mental-health-2019924_1280.jpg @endif)">
 
 
-                                <div class="w-full h-full px-8  justify-center sm:w-1/2 md:w-2/3 lg:w-1/2 xl:w-1/3">
+                                <div class="w-full h-full px-8 flex flex-col justify-center">
 
-                                    <div class="py-3">
-                                        <a href="" class="text-4xl text-white leading-8 font-bold">
+                                    <h1 class="text-4xl text-white leading-8 font-bold">
+                                        <a href="{{ route('post.show', $post) }}">
 
                                             {{ $post->name }}
                                         </a>
-                                    </div>
-
+                                    </h1>
                                     <div class="py-3">
-                                        <p href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
-                                            Visto: {{ $post->visitas }} veces
+                                        <p class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                                            <span class="font-bold text-blue-500 "><i class="fa-solid fa-eye"></i></span>
+                                            {{ $post->visitas }}
                                         </p>
                                     </div>
                                     <div class="py-3">
-                                        <p href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
-                                            Calificacion: {{ $post->calificacion }} ☆
+                                        <p class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                                            <span class="font-bold text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                                            {{ $post->calificacion }}
                                         </p>
+                                    </div>
+                                    {{-- Status 1 = Deshabilitado --}}
+                                    {{-- Status 2 = Habilitado --}}
+                                    <div class="py-3">
+                                        <div class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                                            <a href="{{ route('post.show', $post) }}" class="text-blue-500 hover:underline">Leer más</a>
+                                        </div>
                                     </div>
 
                                     {{-- INICIO FORMULARIO FAVORITO  --}}
 
-                                    @if (auth()->check() && auth()->user()->rol !== 'Psicólogo')
+                                    @if (auth()->check())
                                         <div class="py-3">
                                             @if (auth()->user()->posts->contains($post))
+                                                <!-- El recurso es favorito para el usuario -->
+                                                <form action="{{ route('posts.unfavorite', $post) }}" method="POST">
+                                                    @csrf
+                                                    <div class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                                                        <button type="submit" class="text-red-500">Eliminar de favoritos</button>
+                                                    </div>
+                                                </form>
                                             @else
                                                 <!-- El recurso no es favorito para el usuario -->
                                                 <form action="{{ route('resources.markAsFavorite', $post) }}"
@@ -98,6 +113,7 @@
                                     @endif
 
                                     {{-- FIN FORMULARIO FAVORITO --}}
+
                                 </div>
                             </div>
                         @endif
@@ -111,53 +127,52 @@
 
 
 
-        <div class="max-w-7x1 mx-auto px-2 sm:px-6 lg:px-8 py-8">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <header class="bg-white shadow">
-                    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Vídeos</h1>
-                    </div>
-                </header>
-            </div>
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <header class="bg-white shadow ">
+                <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
+                    <h1 class="text-3xl font-bold tracking-tight text-gray-900 ">Vídeos</h1>
+                </div>
+            </header>
+        </div>
 
 
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4">
 
-            <div class="grid grid-cols-3 py-3 gap-6">
                 @foreach ($posts as $post)
                     @if ($post->postable_type == 'Video')
                         <article
                             class=" rounded-2xl w-full h-80 bg-cover bg-center @if ($loop->first) col-span-2 @endif"
-                            {{-- style="background-image: url({{ url('storage/' . $post->image->url) }})"  --}}>
+                             style="background-image: url({{ url('storage/' . $post->image->url) }})"  >
 
 
                             <div class="w-full h-full px-8 flex flex-col justify-center">
-                                <div class="py-3">
-                                    <a href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
-                                        {{ $post->tipo }}
-                                    </a>
-                                </div>
+
                                 <h1 class="text-4xl text-white leading-8 font-bold">
-                                    <a href="">
+                                    <a href="{{ route('post.show', $post) }}">
 
                                         {{ $post->name }}
+
                                     </a>
                                 </h1>
                                 <div class="py-3">
-                                    <a href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
-                                        Visto: {{ $post->visitas }} veces
-                                    </a>
+                                    <p class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                                        <span class="font-bold text-blue-500 "><i class="fa-solid fa-eye"></i></span>
+                                        {{ $post->visitas }}
+                                    </p>
                                 </div>
                                 <div class="py-3">
-                                    <a href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
-                                        Calificacion: {{ $post->calificacion }} ☆
-                                    </a>
+                                    <p class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                                        <span class="font-bold text-yellow-500"><i class="fa-solid fa-star"></i></span>
+                                        {{ $post->calificacion }}
+                                    </p>
                                 </div>
                                 {{-- Status 1 = Deshabilitado --}}
                                 {{-- Status 2 = Habilitado --}}
                                 <div class="py-3">
-                                    <a href="" class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
-                                        Status: {{ $post->status }} !!
-                                    </a>
+                                    <div class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                                        <a href="{{ route('post.show', $post) }}" class="text-blue-500 hover:underline">Leer más</a>
+                                    </div>
                                 </div>
 
                                 {{-- INICIO FORMULARIO FAVORITO  --}}
@@ -168,7 +183,9 @@
                                             <!-- El recurso es favorito para el usuario -->
                                             <form action="{{ route('posts.unfavorite', $post) }}" method="POST">
                                                 @csrf
-                                                <button type="submit">Eliminar de favoritos</button>
+                                                <div class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
+                                                    <button type="submit" class="text-red-500">Eliminar de favoritos</button>
+                                                </div>
                                             </form>
                                         @else
                                             <!-- El recurso no es favorito para el usuario -->
@@ -197,30 +214,26 @@
         </div>
 
 
-        <div class="max-w-7x1 mx-auto px-2 sm:px-6 lg:px-8 py-8">
-
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <header class="bg-white shadow">
-                    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Comunidades</h1>
-                    </div>
-                </header>
-            </div>
 
 
-            <div class="grid grid-cols-3 py-3 gap-6">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <header class="bg-white shadow ">
+                <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
+                    <h1 class="text-3xl font-bold tracking-tight text-gray-900 ">Comunidades</h1>
+                </div>
+            </header>
+        </div>
+
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4">
                 @foreach ($comunities as $comunity)
-                    <article
-                        class=" rounded-2xl w-full h-80 bg-cover bg-center @if ($loop->first) col-span-2 @endif">
-
+                    <article class="rounded-2xl w-full h-80 bg-cover bg-center @if ($loop->first) col-span-2 @endif"
+                        style="background-color: rgb(61, 60, 59)">
 
                         <div class="w-full h-full px-8 flex flex-col justify-center">
-                            <h1 class="text-4xl text-white leading-8 font-bold">
-                                <a href="">
-                                    {{ $comunity->url }}
-                                </a>
+                            <h1 class="text-4xl text-white leading-8 font-bold overflow-hidden">
+                                <a href="{{ $comunity->url }}" class="hover:underline">{{ $comunity->url }}</a>
                             </h1>
-
                         </div>
 
                     </article>

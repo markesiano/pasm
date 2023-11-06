@@ -51,24 +51,16 @@
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 
                                 @if (auth()->user()->rol !== 'Psicólogo')
-                                    <a href="#"
-                                        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendario</a>
                                     <a href="{{route('favorites.index')}}"
-                                        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Favoritos</a>
-                                    <a href="#"
-                                        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Diario</a>
+                                        class="{{ request()->routeIs('favorites.index') ? 'bg-gray-900' : '' }} text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Favoritos</a>
                                     <a href="{{ route('thought.index') }}"
                                         class="{{ request()->routeIs('thought.index') ? 'bg-gray-900' : '' }}  text-white rounded-md px-3 py-2 text-sm font-medium"
                                         aria-current="page">Pensamientos y emociones</a>
                                 @else
-                                    <a href="{{ route('dashboard') }}"
-                                        class="{{ request()->routeIs('dashboard') ? 'bg-gray-900' : '' }} text-white rounded-md px-3 py-2 text-sm font-medium"
-                                        aria-current="page">Dashboard
-                                    </a>
 
                                     <a href="{{ route('post.indexPsicologo') }}"
                                         class="{{ request()->routeIs('post.indexPsicologo') ? 'bg-gray-900' : '' }} text-white rounded-md px-3 py-2 text-sm font-medium"
-                                        aria-current="page">Post
+                                        aria-current="page">Administrar
                                     </a>
                                 @endif
                             </div>
