@@ -13,6 +13,8 @@ class FavoritosPostController extends Controller
     {
         $favoritePosts = $user->postFavorite;
 
+        dd($favoritePosts);
+
         // $favoritePosts contiene la colección de posts marcados como favoritos para el usuario dado.
         return view('favorite_posts.index', compact('favoritePosts'));
     }

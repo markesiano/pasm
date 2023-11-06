@@ -28,7 +28,8 @@ class User extends Authenticatable
         'email',
         'password',
         'rol',                                  //Se agregó el campo "rol"
-        'certificado_file',                     //Se agregó el campo "certificado_file"
+        'certificado_file',     
+        'user_id'                //Se agregó el campo "certificado_file"
     ];
 
     /**
@@ -65,25 +66,12 @@ class User extends Authenticatable
 
     // RELACION MUCHOS A MUCHOS POST-FAVORITO
 
-    public function postFavorite()
-    {
-        return $this->belongsToMany('App\Models\Post');
-    }
-
-
-    // MARCAR COMO FAVORITA
-    public function markAsFavorite(Post $post)
-    {
-        $this->postFavorite()->attach($post);
+    public function posts(){
+        return $this->belongsToMany(Post::class, 'post_user');
     }
     
 
-    // REMOVER DE FAVORITOS
-    public function removeFromFavorites(Post $post)
-    {
-        $this->postFavorite()->detach($post);
-    }
-
+  
     
 
 }

@@ -15,13 +15,11 @@
 
                         <div class="bg-white w-full p-10 rounded-lg shadow-xl">
                             <div class="mb-10">
-                                <h2 class="text-black-500 font-bold text-3xl">Crear nuevo post </h2>
+                                <h2 class="text-black-500 font-bold text-3xl">Editar post </h2>
                             </div>
-                            <form action="{{ route('post.store') }}" method="post" class="w-full" enctype="multipart/form-data">
+                            <form action="{{route('post.update', $post) }}" method="post" class="w-full">
                                 @csrf
-
-                                <input type="hidden" name="user_id" value="{{ $user_id }}">
-
+                                @method('put')
 
                                 {{-- CAMPO NOMBRE --}}
 
@@ -31,7 +29,7 @@
 
                                     </label>
 
-                                    <input type="text" id="name" name="name" value="{{ old('name') }}"
+                                    <input type="text" id="name" name="name" value="{{ old('name', $post->name) }}"
                                         class="border p-3 w-full text-gray-500 font-bold rounded-lg
                                         @error('name')
                                             border-red-500
@@ -53,7 +51,7 @@
 
                                     </label>
 
-                                    <input type="text" id="slug" name="slug" value="{{ old('slug') }}"
+                                    <input type="text" id="slug" name="slug" value="{{ old('slug', $post->slug) }}"
                                         class="border p-3 w-full text-gray-500 font-bold rounded-lg
                                         @error('slug')
                                             border-red-500
@@ -70,14 +68,13 @@
 
                                 {{-- CAMPO CATEGORY --}}
                                 <div class="mb-5">
-
-                                    <label for=""
-                                        class="mb-2 block uppercase text-black-500 font-bold">Categoria</label>
-                                    <select id="estadosSelect" class="border-2 border-sky-500 rounded-lg p-2"
-                                        name="category_id">
+                                    <label for="" class="mb-2 block uppercase text-black-500 font-bold">Categoria</label>
+                                    <select id="estadosSelect" class="border-2 border-sky-500 rounded-lg p-2" name="category_id">
                                         <option value="" disabled>Seleccione una categoria</option>
                                         @foreach ($categories as $categoria)
-                                            <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+                                            <option value="{{ $categoria->id }}" {{ $categoria->id == $post->category_id ? 'selected' : '' }}>
+                                                {{ $categoria->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -86,71 +83,26 @@
 
                                 {{-- CAMPO ESTADO --}}
                                 <div class="mb-7">
-                                    <label for=""
-                                        class="mb-2 block uppercase text-black-500 font-bold">Estado</label>
-
+                                    <label for="" class="mb-2 block uppercase text-black-500 font-bold">Estado</label>
+                                
                                     <div class="flex gap-8">
-
                                         <div>
-                                            <input class="cursor-pointer" type="radio" id="check-masc" name="status"
-                                                value="1" checked>
+                                            <input class="cursor-pointer" type="radio" id="check-masc" name="status" value="1" {{ $post->status == 1 ? 'checked' : '' }}>
                                             <label for="check-masc">Borrador</label>
                                         </div>
-
+                                
                                         <div>
-                                            <input class="cursor-pointer" type="radio" id="check-fem" name="status"
-                                                value="2">
+                                            <input class="cursor-pointer" type="radio" id="check-fem" name="status" value="2" {{ $post->status == 2 ? 'checked' : '' }}>
                                             <label for="check-fem">Publicado</label>
                                         </div>
-
-
-
                                     </div>
-
-
                                 </div>
                                 {{-- FIN CAMPOS ESTADO --}}
 
 
 
 
-                                {{-- CAMPO IMAGEN --}}
-
-                                <div class="mb-7">
-
-                                    <div class="flex gap-2">
-                                        <div class="w-1/2">
-                                            <img id="picture" src="https://cdn.pixabay.com/photo/2017/01/30/02/20/mental-health-2019924_1280.jpg" alt="">                                    
-                                        </div>
-                                        <div class="w-1/2">
-                                            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                                <div class="text-center">
-                                                    <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                        <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
-                                                    </svg>
-                                                        <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                                                        <label for="file" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                                                            <span>Subir archivo</span>
-                                                            <input id="file" name="file" type="file" class="sr-only">
-                                                        </label>
-                                                        <p class="pl-1">o arrastra y colocalo</p>
-                                                    </div>
-                                                    <p class="text-xs leading-5 text-gray-600">PDF, PNG, JPG menor de 5MB</p>
-                                                    <p class="text-xs leading-5 text-gray-600" x-text="selectedFileName"></p>
-                        
-                                                </div>
-                                            </div>
-                                        </div>
-                                      </div>
-                                </div>
-            
-                                
-                                {{-- FIN CAMPO IMAGEN --}}
-
-
-
-
-                                <div x-data="{ isOpen: false, selectedOption: {{ old('postable_type') ? "'" . old('postable_type') . "'" : 'null' }}, selectedImage: null, selectedFileName: '' }">
+                                <div x-data="{ isOpen: false, selectedOption: '{{ old('postable_type', $post->postable_type) }}', selectedImage: '{{ $post->postable_type === 'Articulo' ? 'https://t3.ftcdn.net/jpg/02/68/26/94/360_F_268269471_g3wufBp7sSADYJY3Ayw4aXBs7EhbnkMJ.jpg' : 'https://cdn-icons-png.flaticon.com/512/354/354637.png' }}', selectedFileName: '' }">
                                     <label for="tipo"
                                         class="mb-2 block uppercase text-black-500 font-bold">Tipo</label>
                                     <input type="hidden" name="postable_type" x-model="selectedOption">
@@ -230,16 +182,16 @@
                                         <label for="cover-photo" <div class="mt-2  rounded-lg border">
                                             {{-- CAMPO EXTRACT --}}
 
-                                            <div class="mb-2 max-w-3xl">
+                                            <div class="mb-2">
                                                 <label for=""
                                                     class="mb-2 block uppercase text-black-500 font-bold">Extract</label>
                                                 <textarea name="extract" id="extract"
-                                                    class="border-2 rounded-lg p-3  
+                                                    class="border-2 rounded-lg p-3 w-full 
                                                     @error('extract')
                                                     border-red-500
                                                     @enderror"
-                                                    >
-                                            
+                                                    id="">
+                                                {{$post->extract}}
                                                 </textarea>
 
 
@@ -264,8 +216,8 @@
                                                 @error('body')
                                                 border-red-500
                                                 @enderror"
-                                            >
-                                    
+                                                    id="">
+                                                    {{$post->body}}
                                         </textarea>
 
 
@@ -323,9 +275,9 @@
                                                         <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
                                                     </svg>
                                                         <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                                                        <label for="video_url" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                                                        <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                             <span>Subir Video</span>
-                                                            <input id="video_url" name="video_url" type="file" class="sr-only" @change="selectedFileName = $event.target.files[0].name">
+                                                            <input id="file-upload" name="file-upload" type="file" class="sr-only" @change="selectedFileName = $event.target.files[0].name">
                                                         </label>
                                                     </div>
                                                     <p class="text-xs leading-5 text-gray-600">mp4, ogx, oga, ogv, ogg, webm</p>
@@ -351,18 +303,21 @@
 
 
                             <div class="md:flex md:justify-between">
-                                <input type="submit" value="Registrar"
+                                <input type="submit" value="Editar"
                                     class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold  p-2 text-white rounded-lg">
                             </div>
+
 
                         </div>
 
                         </form>
 
-
+                        
 
                     </div>
-
+                    <div class="md:flex md:justify-between flex justify-end">
+                        <a href="{{route('post.indexPsicologo')}}" class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold  p-2 text-white rounded-lg"><i class="fa-solid fa-arrow-left"></i> Regresar</a>
+                    </div>
 
 
                 </div>
@@ -391,7 +346,7 @@
             console.error(error);
         });
 
-        ClassicEditor
+    ClassicEditor
         .create(document.querySelector('#body'))
         .catch(error => {
             console.error(error);
@@ -403,27 +358,4 @@
         .catch(error => {
             console.error(error);
         });
-
-        // CAMBIAR LA IMAGEN
-
-        $(document).ready(function(){
-
-            $('#file').change(function(e){
-
-            let file= e.target.files[0];
-
-            let reader= new FileReader();
-
-            reader.onload= (event) => {
-
-            $('#picture').attr('src', event.target.result)
-
-            };
-
-            reader.readAsDataURL(file);
-
-            })
-
-        });
-
 </script>

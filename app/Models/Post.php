@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -24,6 +25,7 @@ class Post extends Model
         'body',
         'descripción',
         'video_url',
+        'user_id' 
     ];
 
 
@@ -46,10 +48,10 @@ class Post extends Model
     
 
     // RELACION MUCHOS A MUCHOS USER-FAVORITO
-    public function userFavorite()
-    {
-        return $this->belongsToMany(User::class);
+    public function users(){
+        return $this->belongsToMany(User::class, 'post_user');
     }
+
 
     // RELACION UNO A MUCHOS POST-COMENTARIOS
     public function comments()
@@ -63,15 +65,6 @@ class Post extends Model
         return $this->morphTo();
     }
 
-    /*
-
-    // RELACION UNO A MUCHOS POST-CALIFICACIONES
-    public function calificaciones()
-    {
-        return $this->hasMany(Calificacion::class);
-    }
-
-    */
 
     public function calificaciones()
     {

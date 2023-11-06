@@ -5,7 +5,7 @@
         <h1 class="text-4xl font-bold text-gray-600">{{ $post->name }}</h1>
 
         <div class="text-lg text-gray-500 mb-2">
-            {{ $post->extract }}
+            {!! $post->extract !!}
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -13,11 +13,18 @@
             {{-- CONTENIDO PRINCIPAL --}}
             <div class="lg:col-span-2">
                 <figure>
-                    <img class="w-full h-80 object-cover object-center" src="" alt="">
+                    @if ($post->image)
+                        <img class="w-full h-80 object-cover object-center" src="{{ Storage::url($post->image->url) }}"
+                            alt="">
+                    @else
+                        <img class="w-full h-80 object-cover object-center"
+                            src="https://cdn.pixabay.com/photo/2017/01/30/02/20/mental-health-2019924_1280.jpg"
+                            alt="">
+                    @endif
                 </figure>
 
                 <div class="text-base text-gray-500 mt-4">
-                    {{ $post->body }}
+                    {!! $post->body !!}
                 </div>
 
             </div>
@@ -30,7 +37,14 @@
                     @foreach ($similares as $similar)
                         <li class="mb-4">
                             <a class="flex" href="{{ route('post.show', $similar) }}">
-                                <img class="w-36 h-20 object-cover object-center" src="" alt="">
+                                @if ($post->image)
+                                    <img class="w-36 h-20 object-cover object-center"
+                                        src="{{ Storage::url($post->image->url) }}" alt="">
+                                @else
+                                    <img class="w-36 h-20 object-cover object-center"
+                                        src="https://cdn.pixabay.com/photo/2017/01/30/02/20/mental-health-2019924_1280.jpg"
+                                        alt="">
+                                @endif 
                                 <span class="ml-2 text-gray-600">{{ $similar->name }}</span>
                             </a>
                         </li>
@@ -64,15 +78,17 @@
                                     <div class="mt-4 flex items-center space-x-4 py-6">
                                         <div class="">
                                             <img class="w-12 h-12 rounded-full"
-                                                src="{{ $comment->user->profile_photo_url }}"
-                                                alt="" />
+                                                src="{{ $comment->user->profile_photo_url }}" alt="" />
                                         </div>
-                                        <div class="text-sm font-semibold">{{ $comment->user->name }}  • <span class="font-normal">Publicado el {{$comment->created_at->format('d/m/Y') }}</span>
-                                            
+                                        <div class="text-sm font-semibold">{{ $comment->user->name }} • <span
+                                                class="font-normal">Publicado el
+                                                {{ $comment->created_at->format('d/m/Y') }}</span>
+
                                         </div>
-                                        <span class="text-sm font-semibold">(hace {{ $comment->created_at->diffForHumans() }})</span>
+                                        <span class="text-sm font-semibold">(hace
+                                            {{ $comment->created_at->diffForHumans() }})</span>
                                     </div>
-                                    
+
                                 </div>
 
                                 <div>{{ $comment->body }}</div>
@@ -101,7 +117,7 @@
                         action="{{ route('comment.store', $post) }}">
                         @csrf
                         <!-- Control de Calificación con Estrellas -->
-                        <input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                         <label for="calificacion">Califica el contenido</label>
                         <p class="clasificacion" id="calificacion" data-post-id="{{ $post->id }}">
                             <input id="radio5" type="radio" name="estrellas" value="5" class="hidden">

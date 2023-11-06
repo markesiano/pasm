@@ -39,13 +39,19 @@
                         {{-- CARD PARA LOS ARTICULOS BUSCADOS --}}
 
                         <div class="bg-white  rounded-lg border p-4">
-                            <img src="https://placehold.co/300x200/d1d4ff/352cb5.png" alt="Placeholder Image"
-                                class="w-full h-48 rounded-md object-cover">
+                            @if ($post->image)
+                        <img class="w-full h-80 object-cover object-center" src="{{ Storage::url($post->image->url) }}"
+                            alt="">
+                    @else
+                        <img class="w-full h-80 object-cover object-center"
+                            src="https://cdn.pixabay.com/photo/2017/01/30/02/20/mental-health-2019924_1280.jpg"
+                            alt="">
+                    @endif
                             <div class="px-1 py-4">
                                 <div class="font-bold text-xl mb-2">{{ $post->name }}</div>
-                                <p class="text-gray-700 text-base">
-                                    {{ Str::substr($post->body, 0, 50)  }}
-                                </p>
+                                {{-- <p class="text-gray-700 text-base">
+                                    {!! Str::substr($post->body, 0, 20)   !!}
+                                </p> --}}
 
                                 <p class="text-black-700 text-base mt-3">
                                     <span class="font-bold text-blue-500"><i class="fa-solid fa-eye"></i></span>

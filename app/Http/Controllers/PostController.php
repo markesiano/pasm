@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
@@ -9,6 +11,7 @@ use App\Models\Comunity;
 use App\Models\Calificacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -21,13 +24,10 @@ class PostController extends Controller
 
     public function indexPsicologo()
     {
-        // Obtén el ID del usuario autenticado
         $userId = auth()->user()->id;
 
-        // Recupera los posts del usuario específico usando Eloquent
         $posts = Post::where('user_id', $userId)->get();
 
-        // Pasa los posts a la vista
         return view('post.indexPsicologo', compact('posts'));
     }
 
@@ -44,33 +44,74 @@ class PostController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        // Lógica para validar y guardar campos generales del post
-        $post = new Post();
-        $post->name = $request->input('name');
-        $post->slug = $request->input('slug');
-        $post->status = $request->input('status');
-        $post->User_id = $request->input('user_id');
-        $post->category_id = $request->input('category_id');
-        $post->postable_type = $request->input('postable_type');
-        $post->postable_id = $request->input('postable_id');
-    
-        // Determinar el tipo de contenido (artículo o video)
-        if ($request->input('postable_type') === 'Articulo') {
-            $post->extract = $request->input('extract');
-            $post->body = $request->input('body');
-        } elseif ($request->input('postable_type') === 'Video') {
-            $post->descripcion = $request->input('descripcion');
-            $post->video_url = $request->input('video_url');
-        }
-    
-        // Guardar el post
-        $post->save();
-    
-        // Redireccionar o retornar una respuesta, según sea necesario
-        return redirect()->route('post.show', $post);
+    public function edit(Post $post){
+        $user_id = Auth::id(); 
+        $categories = Category::all();
+        return view('post.edit', compact('post', 'user_id', 'categories' ));
+   
     }
+
+
+    public function destroy(Post $post){
+
+
+        $post->delete();
+ 
+         return redirect()->route('post.indexPsicologo');
+ 
+ 
+     }
+
+    public function update(StorePostRequest $request, Post $post){
+
+        $data = $request->all();
+
+
+        $post->update($data);
+        return redirect()->route('post.show', $post);
+
+
+    }
+
+
+    public function store(StorePostRequest $request)
+{
+
+    $post = new Post();
+    $post->name = $request->input('name');
+    $post->slug = $request->input('slug');
+    $post->status = $request->input('status');
+    $post->user_id = $request->input('user_id');
+    $post->category_id = $request->input('category_id');
+    $post->postable_type = $request->input('postable_type');
+    $post->postable_id = $request->input('postable_id');
+
+    if ($request->input('postable_type') === 'Articulo') {
+        $post->extract = $request->input('extract');
+        $post->body = $request->input('body');
+    } elseif ($request->input('postable_type') === 'Video') {
+        $post->descripcion = $request->input('descripcion');
+        
+        // Guarda el archivo del video y obtén su ruta
+        $videoPath = $request->file('video_url')->store('posts', 'public');
+        $videoUrl = Storage::url($videoPath);
+        
+        // Almacena la URL del video en el campo video_url de la base de datos
+        $post->video_url = $videoUrl;
+    }
+
+    $post->save();
+
+    if ($request->hasFile('file')) {
+        // Guarda la imagen y obtén su ruta
+        $imageUrl = Storage::put('posts', $request->file('file'), 'public');
+        $post->image()->create([
+            'url' => Storage::url($imageUrl)
+        ]);
+    }
+
+    return redirect()->route('post.show', $post)->with('success', 'Post creado correctamente.');
+}
 
     public function calificar(Request $request, $postId)
     {
@@ -110,14 +151,29 @@ class PostController extends Controller
 
     
 
+   public function markAsFavorite(Post $post, User $user)
+{
+    $userId = auth()->user();
+    $userId->posts()->attach($post->id);
+    return redirect()->back()->with('success', 'Post marcado como favorito.');
+}
 
-    /*
-     public function markAsFavorite(Request $request, Post $post)
-     {
-         auth()->user()->markAsFavorite($post);
-         return back()->with('success', 'Recurso marcado como favorito.');
-     }
-    */
+public function removeFromFavorites(Post $post, User $user)
+{
+    $userId = auth()->user();
+    $userId->posts()->detach($post->id);
+    return redirect()->back()->with('success', 'Post eliminado de favoritos.');
+}
+
+
+
+
+
+
+    
+
+
+   
 
 
 

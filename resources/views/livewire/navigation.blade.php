@@ -53,7 +53,7 @@
                                 @if (auth()->user()->rol !== 'Psicólogo')
                                     <a href="#"
                                         class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendario</a>
-                                    <a href="#"
+                                    <a href="{{route('favorites.index')}}"
                                         class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Favoritos</a>
                                     <a href="#"
                                         class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Diario</a>

@@ -53,7 +53,6 @@ starsContainer.addEventListener('click', (event) => {
     $post = new Post();
     $post->name = $request->input('name');
     $post->slug = $request->input('slug');
-    
     $post->status = $request->input('status');
     $post->User_id = $request->input('User_id');
     $post->category_id = $request->input('category_id');
