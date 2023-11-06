@@ -106,7 +106,7 @@ class PostController extends Controller
         // Guarda la imagen y obtén su ruta
         $imageUrl = Storage::put('posts', $request->file('file'), 'public');
         $post->image()->create([
-            'url' => Storage::url($imageUrl)
+            'url' => 'http://127.0.0.1:8000/storage/'.$imageUrl
         ]);
     }
 

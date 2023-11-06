@@ -120,7 +120,7 @@
 
                                     <div class="flex gap-2">
                                         <div class="w-1/2">
-                                            <img id="picture" src="https://cdn.pixabay.com/photo/2017/01/30/02/20/mental-health-2019924_1280.jpg" alt="">                                    
+                                            <img id="picture" src="https://cdn.pixabay.com/photo/2017/01/30/02/20/mental-health-2019924_1280.jpg" alt="">
                                         </div>
                                         <div class="w-1/2">
                                             <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
@@ -137,14 +137,14 @@
                                                     </div>
                                                     <p class="text-xs leading-5 text-gray-600">PDF, PNG, JPG menor de 5MB</p>
                                                     <p class="text-xs leading-5 text-gray-600" x-text="selectedFileName"></p>
-                        
+
                                                 </div>
                                             </div>
                                         </div>
                                       </div>
                                 </div>
-            
-                                
+
+
                                 {{-- FIN CAMPO IMAGEN --}}
 
 
@@ -234,12 +234,12 @@
                                                 <label for=""
                                                     class="mb-2 block uppercase text-black-500 font-bold">Extract</label>
                                                 <textarea name="extract" id="extract"
-                                                    class="border-2 rounded-lg p-3  
+                                                    class="border-2 rounded-lg p-3
                                                     @error('extract')
                                                     border-red-500
                                                     @enderror"
                                                     >
-                                            
+
                                                 </textarea>
 
 
@@ -260,12 +260,12 @@
                                                 <label for="body"
                                                     class="mb-2 block uppercase text-black-500 font-bold">Body</label>
                                                 <textarea name="body" id="body"
-                                                    class="border-2 rounded-lg p-3 w-full 
+                                                    class="border-2 rounded-lg p-3 w-full
                                                 @error('body')
                                                 border-red-500
                                                 @enderror"
                                             >
-                                    
+
                                         </textarea>
 
 
@@ -295,12 +295,12 @@
                                                 <label for=""
                                                     class="mb-2 block uppercase text-black-500 font-bold">Descripcion</label>
                                                 <textarea name="descripcion" id="descripcion"
-                                                    class="border-2 rounded-lg p-3 w-full 
+                                                    class="border-2 rounded-lg p-3 w-full
                                                     @error('descripcion')
                                                     border-red-500
                                                     @enderror"
                                                     id="">
-                                            
+
                                                 </textarea>
 
 
@@ -330,7 +330,7 @@
                                                     </div>
                                                     <p class="text-xs leading-5 text-gray-600">mp4, ogx, oga, ogv, ogg, webm</p>
                                                     <p class="text-xs leading-5 text-gray-600" x-text="selectedFileName"></p>
-                        
+
                                                 </div>
                                             </div>
 
@@ -397,7 +397,7 @@
             console.error(error);
         });
 
-    
+
         ClassicEditor
         .create(document.querySelector('#descripcion'))
         .catch(error => {

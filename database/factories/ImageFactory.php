@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Faker\Provider\Image;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
@@ -16,10 +17,19 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
+        $imageProvider = new Image($this->faker);
+        $imageUrl = $imageProvider->imageUrl(
+            array(
+                'category' => 'people',
+                'keywords' => 'psicólogo, terapeuta, psiquiatra',
+            )
+        );
+
         return [
-            'url' => 'http://127.0.0.1:8000/storage/posts/' . $this->faker->image('public/storage/posts', 640, 480, null, false),
+            'url' => $imageUrl,
 
             //
         ];
     }
 }
+

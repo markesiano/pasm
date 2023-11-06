@@ -54,13 +54,13 @@
 
                     @foreach ($posts as $post)
                         @if ($post->postable_type == 'Articulo')
-                            <div class="rounded-2xl flex-wrap overflow-hidden  h-80 bg-cover bg-center"
+                            <div class="rounded-2xl flex-wrap overflow-hidden  h-80 bg-cover bg-center "
                                 style="background-image: url({{ $post->image->url }})">
 
 
                                 <div class="w-full h-full px-8 flex flex-col justify-center">
 
-                                    <h1 class="text-4xl text-white leading-8 font-bold">
+                                    <h1 class="inline-block px-3 h-6 bg-gray-200 text-gray rounded">
                                         <a href="{{ route('post.show', $post) }}">
 
                                             {{ $post->name }}
