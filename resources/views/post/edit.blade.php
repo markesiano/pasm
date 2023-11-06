@@ -1,9 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -84,13 +80,13 @@
                                 {{-- CAMPO ESTADO --}}
                                 <div class="mb-7">
                                     <label for="" class="mb-2 block uppercase text-black-500 font-bold">Estado</label>
-                                
+
                                     <div class="flex gap-8">
                                         <div>
                                             <input class="cursor-pointer" type="radio" id="check-masc" name="status" value="1" {{ $post->status == 1 ? 'checked' : '' }}>
                                             <label for="check-masc">Borrador</label>
                                         </div>
-                                
+
                                         <div>
                                             <input class="cursor-pointer" type="radio" id="check-fem" name="status" value="2" {{ $post->status == 2 ? 'checked' : '' }}>
                                             <label for="check-fem">Publicado</label>
@@ -186,7 +182,7 @@
                                                 <label for=""
                                                     class="mb-2 block uppercase text-black-500 font-bold">Extract</label>
                                                 <textarea name="extract" id="extract"
-                                                    class="border-2 rounded-lg p-3 w-full 
+                                                    class="border-2 rounded-lg p-3 w-full
                                                     @error('extract')
                                                     border-red-500
                                                     @enderror"
@@ -212,7 +208,7 @@
                                                 <label for="body"
                                                     class="mb-2 block uppercase text-black-500 font-bold">Body</label>
                                                 <textarea name="body" id="body"
-                                                    class="border-2 rounded-lg p-3 w-full 
+                                                    class="border-2 rounded-lg p-3 w-full
                                                 @error('body')
                                                 border-red-500
                                                 @enderror"
@@ -247,12 +243,12 @@
                                                 <label for=""
                                                     class="mb-2 block uppercase text-black-500 font-bold">Descripcion</label>
                                                 <textarea name="descripcion" id="descripcion"
-                                                    class="border-2 rounded-lg p-3 w-full 
+                                                    class="border-2 rounded-lg p-3 w-full
                                                     @error('descripcion')
                                                     border-red-500
                                                     @enderror"
                                                     id="">
-                                            
+
                                                 </textarea>
 
 
@@ -282,7 +278,7 @@
                                                     </div>
                                                     <p class="text-xs leading-5 text-gray-600">mp4, ogx, oga, ogv, ogg, webm</p>
                                                     <p class="text-xs leading-5 text-gray-600" x-text="selectedFileName"></p>
-                        
+
                                                 </div>
                                             </div>
 
@@ -312,7 +308,7 @@
 
                         </form>
 
-                        
+
 
                     </div>
                     <div class="md:flex md:justify-between flex justify-end">
@@ -352,7 +348,7 @@
             console.error(error);
         });
 
-    
+
         ClassicEditor
         .create(document.querySelector('#descripcion'))
         .catch(error => {

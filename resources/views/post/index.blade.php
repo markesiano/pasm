@@ -55,7 +55,7 @@
                     @foreach ($posts as $post)
                         @if ($post->postable_type == 'Articulo')
                             <div class="rounded-2xl flex-wrap overflow-hidden  h-80 bg-cover bg-center"
-                                style="background-image: url(@if ($post->image) {{ Storage::url($post->image->url) }} @else https://cdn.pixabay.com/photo/2017/01/30/02/20/mental-health-2019924_1280.jpg @endif)">
+                                style="background-image: url({{ $post->image->url }})">
 
 
                                 <div class="w-full h-full px-8 flex flex-col justify-center">
@@ -143,7 +143,7 @@
                     @if ($post->postable_type == 'Video')
                         <article
                             class=" rounded-2xl w-full h-80 bg-cover bg-center @if ($loop->first) col-span-2 @endif"
-                             style="background-image: url({{ url('storage/' . $post->image->url) }})"  >
+                             style="background-image: url({{ $post->image->url }})"  >
 
 
                             <div class="w-full h-full px-8 flex flex-col justify-center">

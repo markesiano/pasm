@@ -37,7 +37,7 @@ class PostController extends Controller
     }
 
     public function create(){
-        $user_id = Auth::id(); 
+        $user_id = Auth::id();
         $categories = Category::all();
 
         return view('post.create', compact('categories', 'user_id'));
@@ -45,10 +45,10 @@ class PostController extends Controller
 
 
     public function edit(Post $post){
-        $user_id = Auth::id(); 
+        $user_id = Auth::id();
         $categories = Category::all();
         return view('post.edit', compact('post', 'user_id', 'categories' ));
-   
+
     }
 
 
@@ -56,10 +56,10 @@ class PostController extends Controller
 
 
         $post->delete();
- 
+
          return redirect()->route('post.indexPsicologo');
- 
- 
+
+
      }
 
     public function update(StorePostRequest $request, Post $post){
@@ -91,11 +91,11 @@ class PostController extends Controller
         $post->body = $request->input('body');
     } elseif ($request->input('postable_type') === 'Video') {
         $post->descripcion = $request->input('descripcion');
-        
+
         // Guarda el archivo del video y obtén su ruta
         $videoPath = $request->file('video_url')->store('posts', 'public');
         $videoUrl = Storage::url($videoPath);
-        
+
         // Almacena la URL del video en el campo video_url de la base de datos
         $post->video_url = $videoUrl;
     }
@@ -134,7 +134,7 @@ class PostController extends Controller
         }
 
         $promedio = $post->calificaciones->avg('rating');
-        
+
         $post->update(['calificacion' => $promedio]);
 
         return response()->json(['message' => 'Calificación guardada correctamente']);
@@ -147,11 +147,11 @@ class PostController extends Controller
         $datos->appends(['buscar' => $buscar]);
         return view('post.buscar', ['datos'=>$datos]);
     }
-    
 
-    
 
-   public function markAsFavorite(Post $post, User $user)
+
+
+public function markAsFavorite(Post $post, User $user)
 {
     $userId = auth()->user();
     $userId->posts()->attach($post->id);
@@ -170,15 +170,15 @@ public function removeFromFavorites(Post $post, User $user)
 
 
 
-    
-
-
-   
 
 
 
-     
-   
+
+
+
+
+
+
 
 
 
