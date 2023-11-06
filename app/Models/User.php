@@ -6,9 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Laravel\Fortify\TwoFactorAuthenticatable;
+use App\Models\Post;
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -27,7 +28,8 @@ class User extends Authenticatable
         'email',
         'password',
         'rol',                                  //Se agregó el campo "rol"
-        'certificado_file',                     //Se agregó el campo "certificado_file"
+        'certificado_file',     
+        'user_id'                //Se agregó el campo "certificado_file"
     ];
 
     /**
@@ -59,4 +61,17 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+
+    // RELACION MUCHOS A MUCHOS POST-FAVORITO
+
+    public function posts(){
+        return $this->belongsToMany(Post::class, 'post_user');
+    }
+    
+
+  
+    
+
 }

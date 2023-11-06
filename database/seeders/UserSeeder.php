@@ -19,6 +19,12 @@ class UserSeeder extends Seeder
             'rol' => 'Estudiante',                           //Se agrega el campo "rol" con valor "Psicólogo"
             'password' => bcrypt('12345678')
         ]);
+        User::create([
+            'name' => 'Santiago Priego',
+            'email' => 'santiago@hotmail.com',
+            'rol' => 'Psicólogo',                           //Se agrega el campo "rol" con valor "Psicólogo"
+            'password' => bcrypt('12345678')
+        ]);
         User::factory(99)->create();
 
 

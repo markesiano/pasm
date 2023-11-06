@@ -1,0 +1,76 @@
+ARCHIVO APP.JS
+
+starsContainer.addEventListener('click', (event) => {
+        const clickedStarIndex = stars.indexOf(event.target);
+        if (clickedStarIndex !== -1) {
+            const rating = clickedStarIndex + 1;
+            const postId = starsContainer.dataset.postId; // Obtén el ID del post desde el atributo data-post-id
+            enviarCalificacionAlServidor(rating, postId);
+        }
+});
+
+
+ function enviarCalificacionAlServidor(rating, postId) {
+
+        
+        
+        // Usa AJAX o fetch para enviar la calificación al servidor
+        
+        // Ejemplo de uso de fetch:
+        fetch(`/posts/${postId}/calificar`, {
+            method: 'POST',
+            
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'), // Asegúrate de incluir el token CSRF
+            },
+            body: JSON.stringify({ rating: rating }),
+        })
+        .then(data => {
+            // Aquí puedes manejar la respuesta del servidor si es necesario
+            console.log('Calificación enviada correctamente.');
+            console.log(rating, postId);
+        })
+        .catch(error => {
+            // Maneja errores si es necesario
+            console.error('Error al enviar la calificación:', error);
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public function store(Request $request)
+{
+    // Lógica para validar y guardar campos generales del post
+    $post = new Post();
+    $post->name = $request->input('name');
+    $post->slug = $request->input('slug');
+    $post->status = $request->input('status');
+    $post->User_id = $request->input('User_id');
+    $post->category_id = $request->input('category_id');
+    $post->postable_type = $request->input('postable_type');
+    $post->postable_id = $request->input('postable_id');
+
+    // Determinar el tipo de contenido (artículo o video)
+    if ($request->input('postable_type') === 'Articulo') {
+        $post->extract = $request->input('extract');
+        $post->body = $request->input('body');
+    } elseif ($request->input('postable_type') === 'Video') {
+        $post->descripcion = $request->input('descripcion');
+        $post->video_url = $request->input('video_url');
+    }
+
+    // Guardar el post
+    $post->save();
+
+    // Redireccionar o retornar una respuesta, según sea necesario
+    return redirect()->route('post.show', $post);
+}

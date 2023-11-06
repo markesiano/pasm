@@ -1,11 +1,11 @@
 <?php
 
 namespace Database\Factories;
-
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Support\Str;
+
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -19,7 +19,8 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->sentence();
+        $name = $this->faker->unique()->words(6, true);
+
         return [
 
             'name'=>$name,
@@ -31,8 +32,8 @@ class PostFactory extends Factory
             'user_id'=> User::all()->random()->id,
             'visitas'=>$this->faker->randomNumber(),
             'calificacion'=>$this->faker->randomFloat(2,1,5),
-            'tipo'=>$this->faker->randomElement(['video','articulo']),
-            //
+            'postable_type'=>$this->faker->randomElement(['Video','Articulo']),
+
         ];
     }
 }
