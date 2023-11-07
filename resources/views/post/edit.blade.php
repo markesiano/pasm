@@ -293,20 +293,20 @@
 
                                 </div>
 
-                        </div>
+                                </div>
 
-                        <div class="mb-2">
-
-
-                            <div class="md:flex md:justify-between">
-                                <input type="submit" value="Editar"
-                                    class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold  p-2 text-white rounded-lg">
-                            </div>
+                                <div class="mb-2">
 
 
-                        </div>
+                                    <div class="md:flex md:justify-between">
+                                        <input type="submit" value="Editar"
+                                            class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold  p-2 text-white rounded-lg">
+                                    </div>
 
-                        </form>
+
+                                </div>
+
+                            </form>
 
 
 

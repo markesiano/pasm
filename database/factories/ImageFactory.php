@@ -17,18 +17,11 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
-        $imageProvider = new Image($this->faker);
-        $imageUrl = $imageProvider->imageUrl(
-            array(
-                'category' => 'people',
-                'keywords' => 'psicólogo, terapeuta, psiquiatra',
-            )
-        );
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Smknstd\FakerPicsumImages\FakerPicsumImagesProvider($faker));
 
         return [
-            'url' => $imageUrl,
-
-            //
+            'url' => $faker->imageUrl(150,150)
         ];
     }
 }
